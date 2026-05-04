@@ -1,5 +1,5 @@
-using System.Numerics;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using Vector3 = UnityEngine.Vector3;
 
 public class Movement : MonoBehaviour
@@ -18,13 +18,27 @@ public class Movement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButtonDown("Jump"))
-        {
-            Debug.Log("Jump!");
-            rb.AddForce(Vector3.up * jumpStrength);
-        }
+        // if (Input.GetButtonDown("Jump"))
+        // {
+        //     Debug.Log("Jump!");
+        //     rb.AddForce(Vector3.up * jumpStrength);
+        // }
 
-        float horizontalDirection = Input.GetAxis("Horizontal");
-        rb.linearVelocity = new Vector3(horizontalDirection * moveSpeed, rb.linearVelocity.y, rb.linearVelocity.z);
+        // float horizontalDirection = Input.GetAxis("Horizontal");
+        // rb.linearVelocity = new Vector3(horizontalDirection * moveSpeed, rb.linearVelocity.y, rb.linearVelocity.z);
+    }
+
+    public void Jump(InputAction.CallbackContext context)
+    {
+        if (!context.started) return;
+        
+        Debug.Log("Jump!");
+        rb.AddForce(Vector3.up * jumpStrength);
+    }
+
+    public void Move(InputAction.CallbackContext context)
+    {
+        Debug.Log("Move");
+        Debug.Log(context.ReadValue<Vector2>());
     }
 }
