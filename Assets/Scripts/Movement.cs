@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Vector3 = UnityEngine.Vector3;
@@ -5,6 +6,7 @@ using Vector3 = UnityEngine.Vector3;
 public class Movement : MonoBehaviour
 {
     private Rigidbody rb;
+    public Vector2 direction;
 
     public float jumpStrength = 500;
 
@@ -28,6 +30,11 @@ public class Movement : MonoBehaviour
         // rb.linearVelocity = new Vector3(horizontalDirection * moveSpeed, rb.linearVelocity.y, rb.linearVelocity.z);
     }
 
+    private void FixedUpdate()
+    {
+        rb.linearVelocity = new Vector3(direction.x * moveSpeed, rb.linearVelocity.y, direction.y * moveSpeed);
+    }
+
     public void Jump(InputAction.CallbackContext context)
     {
         if (!context.started) return;
@@ -39,6 +46,7 @@ public class Movement : MonoBehaviour
     public void Move(InputAction.CallbackContext context)
     {
         Debug.Log("Move");
-        Debug.Log(context.ReadValue<Vector2>());
+        direction = context.ReadValue<Vector2>();
+        Debug.Log(direction);
     }
 }
